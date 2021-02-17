@@ -4,7 +4,7 @@ import os
 import re
 import sys
 
-from recycle.config import TRASH_PATH, TRASH_REGEX
+from recycle.config import TRASH_PATH, TRASH_REGEX, ENABLE_EMOJI, EMOJIS
 from recycle.lib import (
     my_print,
     directory_exists,
@@ -12,6 +12,20 @@ from recycle.lib import (
     search_files,
     get_current_path,
 )
+
+
+def print_file(file_name):
+    if ENABLE_EMOJI:
+        my_print(EMOJIS['file'], end=" ")
+    my_print(file_name)
+
+
+def print_directory(directory_name, is_trash=False):
+    if is_trash:
+        my_print("\033[1;35m{} {}\033[0m".format(
+            EMOJIS["directory"], directory_name))
+    else:
+        my_print(directory_name)
 
 
 def print_branch(file_name, file_path, is_last_one, parent_str, stop_regex):
@@ -28,16 +42,16 @@ def print_branch(file_name, file_path, is_last_one, parent_str, stop_regex):
     sys.stdout.write(tmp_str + header)
 
     if not os.path.isdir(file_path):
-        my_print(file_name)
+        print_file(file_name)
         return
 
     if not stop_tree:
-        my_print(file_name)
+        print_directory(file_name)
         return print_tree(file_path,
                           parent_str=parent_str,
                           stop_regex=stop_regex)
 
-    my_print("\033[1;35m{}\033[0m".format(file_name))
+    print_directory(file_name, True)
 
 
 def print_tree(directory,
@@ -69,7 +83,7 @@ def main():
         for file_name in search_files(parent_dir, file_regex):
             file_path = os.path.join(parent_dir, file_name)
             if os.path.exists(file_path):
-                my_print(file_path)
+                print_directory(file_path)
                 if os.path.isdir(file_path):
                     print_tree(file_path, stop_regex=TRASH_REGEX)
                 my_print("\n")
@@ -79,5 +93,5 @@ def main():
             directory = TRASH_PATH + directory
 
         if directory_exists(directory):
-            my_print(directory)
+            print_directory(directory)
             print_tree(directory, stop_regex=TRASH_REGEX)

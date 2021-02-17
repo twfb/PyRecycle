@@ -3,7 +3,7 @@
 import os
 import re
 
-from recycle.config import  TRASH_PATH, TRASH_REGEX
+from recycle.config import TRASH_PATH, TRASH_REGEX
 from recycle.lib import (
     my_print,
     operations,
@@ -30,14 +30,15 @@ def recover_by_regrex(absolute_dir, file_regex, recover_path, reverse):
             return
         trash_files_list = search_files(absolute_trash_file_dir, TRASH_REGEX)
         for file_name in sorted(trash_files_list, reverse=reverse):
-            recover_by_id(file_name, recover_trash_file_dir, absolute_trash_file_dir)
+            recover_by_id(file_name, recover_trash_file_dir,
+                          absolute_trash_file_dir)
             break
         remove_empty_dir(absolute_trash_file_dir)
 
 
 def recover_from_trash(trash_dir, file_regex, reverse):
     if trash_dir.startswith(TRASH_PATH):
-        relative_dir = trash_dir[len(TRASH_PATH) :]
+        relative_dir = trash_dir[len(TRASH_PATH):]
     relative_dir = trash_dir.strip("/")
     absolute_dir = os.path.join(TRASH_PATH, relative_dir)
     recover_path = "/" + relative_dir

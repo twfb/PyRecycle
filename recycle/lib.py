@@ -16,8 +16,8 @@ def get_current_path():
         return None
 
 
-def my_print(s):
-    sys.stdout.write("{}\n".format(s))
+def my_print(s, end="\n"):
+    sys.stdout.write("{}{}".format(s, end))
 
 
 def get_path_size_str(file_path):

@@ -5,7 +5,7 @@ import os
 import sys
 
 from recycle.lib import my_print, my_input
-from recycle.config import CONFIG_PATH, HOME, TRASH_PATH
+from recycle.config import CONFIG_PATH, HOME, TRASH_PATH, ENABLE_EMOJI
 
 zsh_config = """# py-recycle config start
 # Don't put your config inside "# py-recycle config start" and "# py-recycle config end"!
@@ -67,8 +67,8 @@ def install(shell, path):
         if "# py-recycle config start" in config_info:
             config_info = config_info.split("\n")
             config_info = "\n".join(
-                config_info[0 : config_info.index("# py-recycle config start")]
-                + config_info[config_info.index("# py-recycle config end") + 1 :]
+                config_info[0: config_info.index("# py-recycle config start")]
+                + config_info[config_info.index("# py-recycle config end") + 1:]
             )
     try:
         open(shellrc_path, "w").write(config_info + shell_config[shell])
@@ -98,7 +98,8 @@ def main():
     elif (
         "n"
         in my_input(
-            'Add "{}" to your PATH, to enable it?[Y/n]'.format(scripts_dir_path)
+            'Add "{}" to your PATH, to enable it?[Y/n]'.format(
+                scripts_dir_path)
         ).lower()
     ):
         path = None
@@ -110,6 +111,12 @@ def main():
 
     if not os.path.exists(TRASH_PATH):
         os.makedirs(TRASH_PATH)
-    open(CONFIG_PATH, "w").write(json.dumps(dict(TRASH_PATH=TRASH_PATH)))
+    open(CONFIG_PATH, "w").write(json.dumps(
+        dict(
+            TRASH_PATH=TRASH_PATH,
+            ENABLE_EMOJI=ENABLE_EMOJI
+        ),
+        indent=4
+    ))
     command = "source ~/.{}rc".format(os.getenv("SHELL").split("/")[-1])
     my_print('\nPlease Execute "{}"\n'.format(command))
