@@ -22,8 +22,9 @@ def print_file(file_name):
 
 def print_directory(directory_name, is_trash=False):
     if is_trash:
-        my_print("\033[1;35m{} {}\033[0m".format(
-            EMOJIS["directory"], directory_name))
+        if ENABLE_EMOJI:
+            my_print(EMOJIS["directory"], end=" ")
+        my_print("\033[1;35m{}\033[0m".format(directory_name))
     else:
         my_print(directory_name)
 
