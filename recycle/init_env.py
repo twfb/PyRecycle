@@ -13,6 +13,7 @@ zsh_config = """# py-recycle config start
 compdef '_files -W {}`pwd`' undel
 compdef '_files -W {}`pwd`' pdel
 compdef '_files -W {}`pwd`' tt
+alias tl='tl(){{ tt $1 | less -r }};tl'
 # py-recycle config end
 """.format(
     TRASH_PATH, TRASH_PATH, TRASH_PATH
@@ -46,6 +47,7 @@ _undel() {{
 complete -o filenames -o dirnames -o default -F _undel undel
 complete -o filenames -o dirnames -o default -F _undel pdel
 complete -o filenames -o dirnames -o default -F _undel tt
+alias tl='tl(){{ tt $1 | less -r }};tl'
 # py-recycle config end
 """.format(
     TRASH_PATH, TRASH_PATH, TRASH_PATH

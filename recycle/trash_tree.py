@@ -11,6 +11,7 @@ from recycle.lib import (
     operations,
     search_files,
     get_current_path,
+    get_path_size_str
 )
 
 
@@ -20,13 +21,16 @@ def print_file(file_name):
     my_print(file_name)
 
 
-def print_directory(directory_name, is_trash=False):
+def print_directory(directory_name, is_trash=False, is_header=False):
     if is_trash:
         if ENABLE_EMOJI:
             my_print(EMOJIS["directory"], end=" ")
         my_print("\033[1;35m{}\033[0m".format(directory_name))
+    elif is_header:
+        my_print("{} [{}]".format(directory_name, get_path_size_str(directory_name)))
     else:
         my_print(directory_name)
+
 
 
 def print_branch(file_name, file_path, is_last_one, parent_str, stop_regex):
@@ -84,7 +88,7 @@ def main():
         for file_name in search_files(parent_dir, file_regex):
             file_path = os.path.join(parent_dir, file_name)
             if os.path.exists(file_path):
-                print_directory(file_path)
+                print_directory(file_path, is_header=True)
                 if os.path.isdir(file_path):
                     print_tree(file_path, stop_regex=TRASH_REGEX)
                 my_print("\n")
@@ -94,5 +98,5 @@ def main():
             directory = TRASH_PATH + directory
 
         if directory_exists(directory):
-            print_directory(directory)
+            print_directory(directory, is_header=True)
             print_tree(directory, stop_regex=TRASH_REGEX)
