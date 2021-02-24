@@ -10,6 +10,8 @@ from recycle.config import CONFIG_PATH, HOME, TRASH_PATH, ENABLE_EMOJI
 zsh_config = """# py-recycle config start
 # Don't put your config inside "# py-recycle config start" and "# py-recycle config end"!
 # Else it will be DELETE!
+autoload -Uz compinit
+compinit
 compdef '_files -W {}`pwd`' undel
 compdef '_files -W {}`pwd`' pdel
 compdef '_files -W {}`pwd`' tt
@@ -120,5 +122,14 @@ def main():
         ),
         indent=4
     ))
-    command = "source ~/.{}rc".format(os.getenv("SHELL").split("/")[-1])
-    my_print('\nPlease Execute "{}"\n'.format(command))
+    current_shell = os.getenv("SHELL").split("/")[-1]
+    my_print("\n")
+    if current_shell in ["bash", "zsh"]:
+        command = "source ~/.{}rc".format(current_shell)
+        my_print('\tPlease Execute "{}"'.format(command))
+    else:
+        my_print('\tSorry, detect current shell is "{}", recycle onle support "zsh" and  "bash"'.format(
+            current_shell))
+        my_print(
+            '\tYou can manually execute "source ~/.zshrc" or "source ~/.bashrc" to config zsh or bash')
+    my_print("\n")
