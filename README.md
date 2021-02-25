@@ -20,7 +20,8 @@
 
 ## Installation
 1. `pip install py-recycle`
-2. `/usr/local/bin/recycle_init 2&> /dev/null || ~/.local/bin/recycle_init`
+2. `recycle_init`
+    - If you did not add python script location to `PATH`, execute `/usr/local/bin/recycle_init 2&> /dev/null || ~/.local/bin/recycle_init`
 
 ## Configuration
 
