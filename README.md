@@ -6,11 +6,11 @@
 
 
 ## Usage
-- del file: `del file_path`
-- undel file: `undel file_path` or `undel trash_path`
+- move file to trash directory: `del file_path`
+- recover file from trash drirectory: `undel file_path` or `undel trash_path`
 - permanently delete file: `pdel trash_file`
-- trash tree: `tt`
-- trash tree with `less`: `tl`
+- print trash tree: `tt`
+- print trash tree with `less`: `tl`
 - example
     - `del ~/a`, `del /root/a`, `del a`, `del \^a`, `del "^a"`
     - `undel ~/a`, `undel /root/a`, `undel a`, `undel ~/.Trash/root/a`
