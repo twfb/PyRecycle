@@ -1,31 +1,29 @@
 # Recycle
-> recycle for linux
+> Linux 垃圾回收站
 
-[中文](./README_CN.md)
-
-## Screenshot
+## 截屏
 ![](./example.gif)
 
 
-## Usage
-- move file to trash directory: `del file_path`
-- recover file from trash directory: `undel file_path` or `undel trash_path`
-- permanently delete file: `pdel trash_file`
-- print trash tree: `tt`
-- print trash tree with `less`: `tl`
-- example
+## 用法
+- 将文件移动到回收站: `del file_path`
+- 将文件才回收站恢复: `undel file_path` or `undel trash_path`
+- 永久删除垃圾文件: `pdel trash_file`
+- 打印回收站文件树: `tt`
+- 打印回收站文件树调用`less`显示: `tl`
+- 示例
     - `del ~/a`, `del /root/a`, `del a`, `del \^a`, `del "^a"`
     - `undel ~/a`, `undel /root/a`, `undel a`, `undel ~/.Trash/root/a`
     - `pdel ~/a`, `pdel /root/a`, `pdel a`, `pdel ~/.Trash/root/a`
     - `tt`, `tt ~`
     - `tl`, `tl ~`
 
-## Installation
+## 安装
 1. `pip install py-recycle`
 2. `recycle_init`
-    - If you did not add python script location to `PATH`, execute `/usr/local/bin/recycle_init 2&> /dev/null || ~/.local/bin/recycle_init`
+    - 如果你的`PATH`中没有Python脚本目录, 执行 `/usr/local/bin/recycle_init 2&> /dev/null || ~/.local/bin/recycle_init`
 
-## Configuration
+## 配置
 
 `vim ~/.py_recycle.json`
 
@@ -37,7 +35,7 @@
 ```
 ### Emoji
 
-> Enable when setting `ENABLE_EMOJI` to true, default is true.
+> 设置`ENABLE_EMOJI`为true启用表情, 默认为true.
 
 ```
 /root/.Trash/root/git/recycle/Test
