@@ -7,7 +7,7 @@
 
 ## Usage
 - move file to trash directory: `del file_path`
-- recover file from trash drirectory: `undel file_path` or `undel trash_path`
+- recover file from trash directory: `undel file_path` or `undel trash_path`
 - permanently delete file: `pdel trash_file`
 - print trash tree: `tt`
 - print trash tree with `less`: `tl`
