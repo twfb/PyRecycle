@@ -89,7 +89,7 @@ def input_yes(s):
 
 def replace_file(file_path):
     if os.path.exists(file_path):
-        if input_yes("{} already exists replace it? [Y/n]".format(file_path)):
+        if input_yes("{} already exists replace it? [N/y]".format(file_path)):
             trash_file = os.path.join(
                 TRASH_PATH + file_path, generate_trash_file_name(file_path)
             )
