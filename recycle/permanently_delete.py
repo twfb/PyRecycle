@@ -10,6 +10,7 @@ from recycle.lib import (
     search_files,
     execute_delete,
     remove_empty_dir,
+    input_yes
 )
 
 
@@ -35,6 +36,8 @@ def permanently_delete(trash_dir, file_regex, reverse):
         relative_dir = trash_dir.strip("/")
     absolute_dir = os.path.join(TRASH_PATH, relative_dir)
     if not directory_exists(absolute_dir):
+        return
+    if not input_yes('\n\n\tDo you really want to delete \033[1;31m{}\033[0m ? [N/y]\n\n'.format(file_regex if file_regex != '\.' else trash_dir)):
         return
     if re.match(TRASH_REGEX, file_regex):
         return delete_by_id(file_regex, absolute_dir)
