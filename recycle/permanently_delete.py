@@ -14,10 +14,8 @@ from recycle.lib import (
 )
 
 
-def delete_by_id(file_id, absolute_dir):
-    absolute_file = os.path.join(absolute_dir, file_id)
-    execute_delete(absolute_file)
-    return remove_empty_dir(absolute_dir)
+def delete_by_id(absolute_file):
+    return execute_delete(absolute_file)
 
 
 def delete_by_regrex(absolute_dir, file_regex, reverse):
@@ -37,11 +35,13 @@ def permanently_delete(trash_dir, file_regex, reverse):
     absolute_dir = os.path.join(TRASH_PATH, relative_dir)
     if not directory_exists(absolute_dir):
         return
-    if not input_yes('\n\n\tDo you really want to delete \033[1;31m{}\033[0m ? [N/y]\n\n'.format(file_regex if file_regex != '\.' else trash_dir)):
+    absolute_file = os.path.join(absolute_dir, file_regex)
+    if not input_yes('\tDelete \033[1;31m{}\033[0m ? [N/y]'.format(absolute_file.replace('\.', ''))):
         return
     if re.match(TRASH_REGEX, file_regex):
-        return delete_by_id(file_regex, absolute_dir)
+        return delete_by_id(absolute_file)
     delete_by_regrex(absolute_dir, file_regex, reverse)
+    return remove_empty_dir(absolute_dir)
 
 
 def main():
