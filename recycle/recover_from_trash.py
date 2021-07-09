@@ -46,6 +46,9 @@ def recover_from_trash(trash_dir, file_regex, reverse):
     if not directory_exists(absolute_dir):
         return
 
+    if not os.path.isdir(recover_path):
+        os.makedirs(recover_path, exist_ok=True)
+
     if re.match(TRASH_REGEX, file_regex):
         current_dir = os.getcwd()
         recover_by_id(file_regex, recover_path, absolute_dir)
