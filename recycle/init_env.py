@@ -71,8 +71,8 @@ def install(shell, path):
         if "# py-recycle config start" in config_info:
             config_info = config_info.split("\n")
             config_info = "\n".join(
-                config_info[0: config_info.index("# py-recycle config start")]
-                + config_info[config_info.index("# py-recycle config end") + 1:]
+                config_info[0 : config_info.index("# py-recycle config start")]
+                + config_info[config_info.index("# py-recycle config end") + 1 :]
             )
     try:
         open(shellrc_path, "w").write(config_info + shell_config[shell])
@@ -102,8 +102,7 @@ def main():
     elif (
         "n"
         in my_input(
-            'Add "{}" to your PATH, to enable it?[Y/n]'.format(
-                scripts_dir_path)
+            'Add "{}" to your PATH, to enable it?[Y/n]'.format(scripts_dir_path)
         ).lower()
     ):
         path = None
@@ -115,21 +114,21 @@ def main():
 
     if not os.path.exists(TRASH_PATH):
         os.makedirs(TRASH_PATH)
-    open(CONFIG_PATH, "w").write(json.dumps(
-        dict(
-            TRASH_PATH=TRASH_PATH,
-            ENABLE_EMOJI=ENABLE_EMOJI
-        ),
-        indent=4
-    ))
+    open(CONFIG_PATH, "w").write(
+        json.dumps(dict(TRASH_PATH=TRASH_PATH, ENABLE_EMOJI=ENABLE_EMOJI), indent=4)
+    )
     current_shell = os.getenv("SHELL").split("/")[-1]
     my_print("\n")
     if current_shell in ["bash", "zsh"]:
         command = "source ~/.{}rc".format(current_shell)
         my_print('\tPlease Execute "{}"'.format(command))
     else:
-        my_print('\tSorry, detect current shell is "{}", recycle onle support "zsh" and  "bash"'.format(
-            current_shell))
         my_print(
-            '\tYou can manually execute "source ~/.zshrc" or "source ~/.bashrc" to config zsh or bash')
+            '\tSorry, detect current shell is "{}", recycle onle support "zsh" and  "bash"'.format(
+                current_shell
+            )
+        )
+        my_print(
+            '\tYou can manually execute "source ~/.zshrc" or "source ~/.bashrc" to config zsh or bash'
+        )
     my_print("\n")

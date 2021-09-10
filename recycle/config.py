@@ -13,7 +13,4 @@ if not os.path.isfile(CONFIG_PATH):
 config = json.loads(open(CONFIG_PATH).read())
 TRASH_PATH = config.get("TRASH_PATH") or INIT_TRASH_PATH
 ENABLE_EMOJI = config.get("ENABLE_EMOJI", True)
-EMOJIS = {
-    "file": "📄",
-    "directory": "📁"
-}
+EMOJIS = {"file": "📄", "directory": "📁"}

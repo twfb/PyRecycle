@@ -11,13 +11,13 @@ from recycle.lib import (
     operations,
     search_files,
     get_current_path,
-    get_path_size_str
+    get_path_size_str,
 )
 
 
 def print_file(file_name):
     if ENABLE_EMOJI:
-        my_print(EMOJIS['file'], end=" ")
+        my_print(EMOJIS["file"], end=" ")
     my_print(file_name)
 
 
@@ -30,7 +30,6 @@ def print_directory(directory_name, is_trash=False, is_header=False):
         my_print("{} [{}]".format(directory_name, get_path_size_str(directory_name)))
     else:
         my_print(directory_name)
-
 
 
 def print_branch(file_name, file_path, is_last_one, parent_str, stop_regex):
@@ -52,17 +51,12 @@ def print_branch(file_name, file_path, is_last_one, parent_str, stop_regex):
 
     if not stop_tree:
         print_directory(file_name)
-        return print_tree(file_path,
-                          parent_str=parent_str,
-                          stop_regex=stop_regex)
+        return print_tree(file_path, parent_str=parent_str, stop_regex=stop_regex)
 
     print_directory(file_name, True)
 
 
-def print_tree(directory,
-               stop_regex=None,
-               parent_str="",
-               first_print_regex=True):
+def print_tree(directory, stop_regex=None, parent_str="", first_print_regex=True):
     if first_print_regex and stop_regex:
         files = sorted(
             os.listdir(directory),
