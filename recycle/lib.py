@@ -6,7 +6,13 @@ import re
 import datetime
 import subprocess
 
-from recycle.config import TRASH_PATH, TRASH_DATETIME_FORMAT
+from recycle.config import (
+    TRASH_PATH,
+    TRASH_DATETIME_FORMAT,
+    FILE_SIZE_COLORS,
+    ENABLE_COLOR,
+    COLORS,
+)
 
 
 def get_current_path():
@@ -16,8 +22,25 @@ def get_current_path():
         return None
 
 
-def my_print(s, end="\n"):
-    sys.stdout.write("{}{}".format(s, end))
+def get_colorful_str(s, end="\n", color_code=None):
+    if color_code and ENABLE_COLOR:
+        if " " in color_code:
+            font_weight, color_code = 1, color_code.split(" ")[1]
+        else:
+            font_weight, color_code = 0, color_code
+        color_code = COLORS[color_code]
+        s = "\033[{}m\033[1;{}m{}\033\033[0m".format(font_weight, color_code, s)
+    return "{}{}".format(s, end)
+
+
+def my_print(s, end="\n", color_code=None):
+    sys.stdout.write(get_colorful_str(s, end, color_code))
+
+
+def get_size_color_code(size_str):
+    index = len(size_str[:-1].split(".")[0]) - 1
+    sign = size_str[-1]
+    return FILE_SIZE_COLORS.get(sign, ["white"] * 4)[index]
 
 
 def get_path_size_str(file_path):

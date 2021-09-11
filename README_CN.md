@@ -24,32 +24,94 @@
     - 如果你的`PATH`中没有Python脚本目录, 执行 `/usr/local/bin/recycle_init 2&> /dev/null || ~/.local/bin/recycle_init`
 
 ## 配置
+- `ENABLE_EMOJI`: 是否启用表情
+- `ENABLE_COLOR`: 是否启用颜色
+- `TREE_ALL_DIRECTORY_SIZE`: 是否打印所有文件大小
+- `TRASH_PATH`: 回收站绝对路径
+- `FILE_SIZE_COLORS`: 自定义文件大小单位的颜色
+
+例:
 
 `vim ~/.py_recycle.json`
 
 ```Json
 {
+    "ENABLE_EMOJI": true,
+    "ENABLE_COLOR": true,
+    "TREE_ALL_DIRECTORY_SIZE": false,
     "TRASH_PATH": "/root/.Trash",
-    "ENABLE_EMOJI": true
-}   
-```
-### Emoji
-
-> 设置`ENABLE_EMOJI`为true启用表情, 默认为true.
-
-```
-/root/.Trash/root/git/recycle/Test
-├── 📁 2021-02-18_14:52:05620877_4.0K
-├── a
-│   ├── 📁 2021-02-18_14:51:50932229_4.0K
-│   └── 📄 2021-02-18_14:52:01623779_0
-├── b
-│   ├── 📁 2021-02-18_14:51:50934404_4.0K
-│   └── 📄 2021-02-18_14:52:01626129_0
-└── c
-    ├── 📁 2021-02-18_14:51:50945546_4.0K
-    └── 📄 2021-02-18_14:52:01636655_0
+    "FILE_SIZE_COLORS": {
+        "文件大小单位": [
+            "文件大小<10单位",
+            "文件大小<100单位",
+            "文件大小<1000单位",
+            "文件大小<10000单位"
+        ],
+        "可选颜色": [
+            "white",
+            "black",
+            "red",
+            "green",
+            "orange",
+            "blue",
+            "magenta",
+            "cyan",
+            "light_gray",
+            "blod white",
+            "blod black",
+            "blod red",
+            "blod green",
+            "blod orange",
+            "blod blue",
+            "blod magenta",
+            "blod cyan",
+            "blod light_gray"
+        ],
+        "b": [
+            "white",
+            "white",
+            "white",
+            "white"
+        ],
+        "B": [
+            "white",
+            "white",
+            "white",
+            "white"
+        ],
+        "K": [
+            "white",
+            "white",
+            "white",
+            "green"
+        ],
+        "M": [
+            "green",
+            "green",
+            "blod green",
+            "blue"
+        ],
+        "G": [
+            "blue",
+            "blue",
+            "blod blue",
+            "orange"
+        ],
+        "T": [
+            "orange",
+            "orange",
+            "blood orange",
+            "red"
+        ],
+        "P": [
+            "red",
+            "red",
+            "blood red",
+            "blood red"
+        ]
+    }
+}
 ```
 
 ### TODO
-[ ]根据垃圾文件大小显示不同颜色
+[X]根据垃圾文件大小显示不同颜色

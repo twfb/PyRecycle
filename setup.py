@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="py-recycle",
-    version="1.2.19",
+    version="1.2.20",
     description=("Recycle for linux"),
     long_description=open("README.rst").read(),
     author="twfb",

@@ -5,7 +5,15 @@ import os
 import sys
 
 from recycle.lib import my_print, my_input
-from recycle.config import CONFIG_PATH, HOME, TRASH_PATH, ENABLE_EMOJI
+from recycle.config import (
+    CONFIG_PATH,
+    HOME,
+    ENABLE_EMOJI,
+    ENABLE_COLOR,
+    TREE_ALL_DIRECTORY_SIZE,
+    TRASH_PATH,
+    FILE_SIZE_COLORS,
+)
 
 zsh_config = """# py-recycle config start
 # Don't put your config inside "# py-recycle config start" and "# py-recycle config end"!
@@ -115,7 +123,16 @@ def main():
     if not os.path.exists(TRASH_PATH):
         os.makedirs(TRASH_PATH)
     open(CONFIG_PATH, "w").write(
-        json.dumps(dict(TRASH_PATH=TRASH_PATH, ENABLE_EMOJI=ENABLE_EMOJI), indent=4)
+        json.dumps(
+            dict(
+                ENABLE_EMOJI=ENABLE_EMOJI,
+                ENABLE_COLOR=ENABLE_COLOR,
+                TREE_ALL_DIRECTORY_SIZE=TREE_ALL_DIRECTORY_SIZE,
+                TRASH_PATH=TRASH_PATH,
+                FILE_SIZE_COLORS=FILE_SIZE_COLORS,
+            ),
+            indent=4,
+        )
     )
     current_shell = os.getenv("SHELL").split("/")[-1]
     my_print("\n")

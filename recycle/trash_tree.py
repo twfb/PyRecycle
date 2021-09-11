@@ -4,7 +4,14 @@ import os
 import re
 import sys
 
-from recycle.config import TRASH_PATH, TRASH_REGEX, ENABLE_EMOJI, EMOJIS
+from recycle.config import (
+    TRASH_PATH,
+    TRASH_REGEX,
+    ENABLE_EMOJI,
+    EMOJIS,
+    TREE_ALL_DIRECTORY_SIZE,
+)
+
 from recycle.lib import (
     my_print,
     directory_exists,
@@ -12,22 +19,36 @@ from recycle.lib import (
     search_files,
     get_current_path,
     get_path_size_str,
+    get_size_color_code,
 )
 
 
 def print_file(file_name):
     if ENABLE_EMOJI:
         my_print(EMOJIS["file"], end=" ")
-    my_print(file_name)
+    color_code = get_size_color_code(file_name.split("_")[-1])
+    my_print(file_name, color_code=color_code)
 
 
-def print_directory(directory_name, is_trash=False, is_header=False):
+def print_directory(directory_name, directory_path, is_trash=False, is_header=False):
     if is_trash:
         if ENABLE_EMOJI:
             my_print(EMOJIS["directory"], end=" ")
-        my_print("\033[1;35m{}\033[0m".format(directory_name))
+        color_code = get_size_color_code(directory_name.split("_")[-1])
+        my_print(directory_name, color_code=color_code)
+
     elif is_header:
-        my_print("{} [{}]".format(directory_name, get_path_size_str(directory_name)))
+        size_str = get_path_size_str(directory_path)
+        my_print(
+            "{} [{}]".format(directory_name, size_str),
+            color_code=get_size_color_code(size_str),
+        )
+    elif TREE_ALL_DIRECTORY_SIZE:
+        size_str = get_path_size_str(directory_path)
+        my_print(
+            "{} [{}]".format(directory_name, size_str),
+            color_code=get_size_color_code(size_str),
+        )
     else:
         my_print(directory_name)
 
@@ -50,10 +71,10 @@ def print_branch(file_name, file_path, is_last_one, parent_str, stop_regex):
         return
 
     if not stop_tree:
-        print_directory(file_name)
+        print_directory(file_name, file_path)
         return print_tree(file_path, parent_str=parent_str, stop_regex=stop_regex)
 
-    print_directory(file_name, True)
+    print_directory(file_name, file_path, True)
 
 
 def print_tree(directory, stop_regex=None, parent_str="", first_print_regex=True):
@@ -82,7 +103,7 @@ def main():
         for file_name in search_files(parent_dir, file_regex):
             file_path = os.path.join(parent_dir, file_name)
             if os.path.exists(file_path):
-                print_directory(file_path, is_header=True)
+                print_directory(file_path, file_path, is_header=True)
                 if os.path.isdir(file_path):
                     print_tree(file_path, stop_regex=TRASH_REGEX)
                 my_print("\n")
@@ -92,5 +113,5 @@ def main():
             directory = TRASH_PATH + directory
 
         if directory_exists(directory):
-            print_directory(directory, is_header=True)
+            print_directory(directory, directory, is_header=True)
             print_tree(directory, stop_regex=TRASH_REGEX)

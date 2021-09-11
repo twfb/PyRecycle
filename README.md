@@ -26,32 +26,94 @@
     - If you did not add python script location to `PATH`, execute `/usr/local/bin/recycle_init 2&> /dev/null || ~/.local/bin/recycle_init`
 
 ## Configuration
+- `ENABLE_EMOJI`: Enable emoji
+- `ENABLE_COLOR`: Enable color
+- `TREE_ALL_DIRECTORY_SIZE`: Print all file or directory size
+- `TRASH_PATH`: Recycle bin absolute path
+- `FILE_SIZE_COLORS`: Customize the color of file size units
+
+Example:
 
 `vim ~/.py_recycle.json`
 
 ```Json
 {
+    "ENABLE_EMOJI": true,
+    "ENABLE_COLOR": true,
+    "TREE_ALL_DIRECTORY_SIZE": false,
     "TRASH_PATH": "/root/.Trash",
-    "ENABLE_EMOJI": true
-}   
-```
-### Emoji
-
-> Enable when setting `ENABLE_EMOJI` to true, default is true.
-
-```
-/root/.Trash/root/git/recycle/Test
-├── 📁 2021-02-18_14:52:05620877_4.0K
-├── a
-│   ├── 📁 2021-02-18_14:51:50932229_4.0K
-│   └── 📄 2021-02-18_14:52:01623779_0
-├── b
-│   ├── 📁 2021-02-18_14:51:50934404_4.0K
-│   └── 📄 2021-02-18_14:52:01626129_0
-└── c
-    ├── 📁 2021-02-18_14:51:50945546_4.0K
-    └── 📄 2021-02-18_14:52:01636655_0
+    "FILE_SIZE_COLORS": {
+        "file size unit": [
+            "file size < 10unit",
+            "file size < 100unit",
+            "file size < 1000unit",
+            "file size < 10000unit"
+        ],
+        "choice of color": [
+            "white",
+            "black",
+            "red",
+            "green",
+            "orange",
+            "blue",
+            "magenta",
+            "cyan",
+            "light_gray",
+            "blod white",
+            "blod black",
+            "blod red",
+            "blod green",
+            "blod orange",
+            "blod blue",
+            "blod magenta",
+            "blod cyan",
+            "blod light_gray"
+        ],
+        "b": [
+            "white",
+            "white",
+            "white",
+            "white"
+        ],
+        "B": [
+            "white",
+            "white",
+            "white",
+            "white"
+        ],
+        "K": [
+            "white",
+            "white",
+            "white",
+            "green"
+        ],
+        "M": [
+            "green",
+            "green",
+            "blod green",
+            "blue"
+        ],
+        "G": [
+            "blue",
+            "blue",
+            "blod blue",
+            "orange"
+        ],
+        "T": [
+            "orange",
+            "orange",
+            "blood orange",
+            "red"
+        ],
+        "P": [
+            "red",
+            "red",
+            "blood red",
+            "blood red"
+        ]
+    }
+}
 ```
 
 ### TODO
-[ ] show different color by trash file size
+[X] show different color by trash file size
