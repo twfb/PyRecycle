@@ -11,6 +11,7 @@ from recycle.lib import (
     execute_delete,
     remove_empty_dir,
     input_yes,
+    get_colorful_str,
 )
 
 
@@ -37,7 +38,11 @@ def permanently_delete(trash_dir, file_regex, reverse):
         return
     absolute_file = os.path.join(absolute_dir, file_regex)
     if not input_yes(
-        "\tDelete \033[1;31m{}\033[0m ? [N/y]".format(absolute_file.replace("\.", ""))
+        "\tDelete {} ? [N/y]".format(
+            get_colorful_str(
+                absolute_file.replace("\.", ""), color_code="bold red", end=""
+            )
+        )
     ):
         return
     if re.match(TRASH_REGEX, file_regex):

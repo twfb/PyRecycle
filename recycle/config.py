@@ -25,7 +25,12 @@ COLORS = {
 }
 
 FILE_SIZE_COLORS = {
-    "file size unit": ["file size < 10unit", "file size < 100unit", "file size < 1000unit", "file size < 10000unit"],
+    "file size unit": [
+        "file size < 10unit",
+        "file size < 100unit",
+        "file size < 1000unit",
+        "file size < 10000unit",
+    ],
     "choice of color": list(COLORS.keys()) + list(map(lambda x: "blod " + x, COLORS)),
     "b": ["white"] * 4,
     "B": ["white"] * 4,
