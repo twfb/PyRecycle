@@ -38,6 +38,7 @@ def recover_by_regrex(absolute_dir, file_regex, recover_path, reverse):
 def recover_from_trash(trash_dir, file_regex, reverse):
     if trash_dir.startswith(TRASH_PATH):
         relative_dir = trash_dir[len(TRASH_PATH) :]
+    is_trash_id = re.match(TRASH_REGEX, file_regex)
     relative_dir = trash_dir.strip("/")
     absolute_dir = os.path.join(TRASH_PATH, relative_dir)
     recover_path = "/" + relative_dir
@@ -46,9 +47,12 @@ def recover_from_trash(trash_dir, file_regex, reverse):
         return
 
     if not os.path.isdir(recover_path):
-        os.makedirs(recover_path, exist_ok=True)
+        if is_trash_id and os.path.isdir("/".join(recover_path.split("/")[:-1])):
+            pass
+        else:
+            os.makedirs(recover_path, exist_ok=True)
 
-    if re.match(TRASH_REGEX, file_regex):
+    if is_trash_id:
         current_dir = os.getcwd()
         recover_by_id(file_regex, recover_path, absolute_dir)
         if trash_dir == current_dir:
