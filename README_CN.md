@@ -2,7 +2,7 @@
 > Linux 垃圾回收站
 
 ## 截屏
-![](./example.gif)
+[![asciicast](https://asciinema.org/a/nX4UaebaXMGFWYvHuBui0WsLi.svg)](https://asciinema.org/a/nX4UaebaXMGFWYvHuBui0WsLi)
 
 
 ## 用法

@@ -4,7 +4,7 @@
 [中文](./README_CN.md)
 
 ## Screenshot
-![](./example.gif)
+[![asciicast](https://asciinema.org/a/nX4UaebaXMGFWYvHuBui0WsLi.svg)](https://asciinema.org/a/nX4UaebaXMGFWYvHuBui0WsLi)
 
 
 ## Usage
