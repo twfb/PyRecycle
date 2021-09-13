@@ -38,10 +38,8 @@ def permanently_delete(trash_dir, file_regex, reverse):
         return
     absolute_file = os.path.join(absolute_dir, file_regex)
     if not input_yes(
-        "\tDelete {} ? [N/y]".format(
-            get_colorful_str(
-                absolute_file.replace("\.", ""), color_code="bold red", end=""
-            )
+        "\tPermanently delete {} ? [N/y] ".format(
+            get_colorful_str(absolute_file.replace("\.", ""), color_code="red", end="")
         )
     ):
         return

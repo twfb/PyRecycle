@@ -2,7 +2,7 @@
 > Linux 垃圾回收站
 
 ## 截屏
-[![asciicast](https://asciinema.org/a/nX4UaebaXMGFWYvHuBui0WsLi.svg)](https://asciinema.org/a/nX4UaebaXMGFWYvHuBui0WsLi)
+[![asciicast](https://asciinema.org/a/435392.svg)](https://asciinema.org/a/435392)
 
 
 ## 用法
@@ -48,7 +48,6 @@
             "文件大小<10000单位"
         ],
         "可选颜色": [
-            "white",
             "black",
             "red",
             "green",
@@ -57,58 +56,63 @@
             "magenta",
             "cyan",
             "light_gray",
-            "blod white",
-            "blod black",
-            "blod red",
-            "blod green",
-            "blod orange",
-            "blod blue",
-            "blod magenta",
-            "blod cyan",
-            "blod light_gray"
-        ],
-        "b": [
-            "white",
-            "white",
-            "white",
+            "dark_gray",
+            "light_red",
+            "light_green",
+            "yellow",
+            "light_blue",
+            "light_purple",
+            "light_cyan",
             "white"
         ],
-        "B": [
-            "white",
-            "white",
-            "white",
-            "white"
-        ],
-        "K": [
-            "white",
-            "white",
-            "white",
-            "green"
-        ],
-        "M": [
-            "green",
-            "green",
-            "blod green",
-            "blue"
-        ],
-        "G": [
-            "blue",
-            "blue",
-            "blod blue",
-            "orange"
-        ],
-        "T": [
-            "orange",
-            "orange",
-            "blood orange",
-            "red"
-        ],
-        "P": [
-            "red",
-            "red",
-            "blood red",
-            "blood red"
-        ]
+         "": [
+             "light_gray",
+             "light_gray",
+             "light_gray",
+             "light_gray"
+         ],
+         "b": [
+             "light_gray",
+             "light_gray",
+             "light_gray",
+             "light_gray"
+         ],
+         "B": [
+             "light_gray",
+             "light_gray",
+             "light_gray",
+             "light_gray"
+         ],
+         "K": [
+             "light_gray",
+             "light_gray",
+             "light_gray",
+             "cyan"
+         ],
+         "M": [
+             "cyan",
+             "cyan",
+             "light_cyan",
+             "orange"
+         ],
+         "G": [
+             "orange",
+             "orange",
+             "yellow",
+             "magenta"
+         ],
+         "T": [
+             "magenta",
+             "magenta",
+             "light_purple",
+             "red"
+         ],
+         "P": [
+             "red",
+             "red",
+             "light_red",
+             "light_red"
+         ]
     }
 }
 ```

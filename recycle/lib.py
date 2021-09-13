@@ -24,12 +24,8 @@ def get_current_path():
 
 def get_colorful_str(s, end="\n", color_code=None):
     if color_code and ENABLE_COLOR:
-        if " " in color_code:
-            font_weight, color_code = 1, color_code.split(" ")[1]
-        else:
-            font_weight, color_code = 0, color_code
         color_code = COLORS[color_code]
-        s = "\033[{}m\033[1;{}m{}\033\033[0m".format(font_weight, color_code, s)
+        s = "\033[{}m{}\033[0m".format(color_code, s)
     return "{}{}".format(s, end)
 
 
@@ -39,8 +35,8 @@ def my_print(s, end="\n", color_code=None):
 
 def get_size_color_code(size_str):
     index = len(size_str[:-1].split(".")[0]) - 1
-    sign = size_str[-1]
-    return FILE_SIZE_COLORS.get(sign, ["white"] * 4)[index]
+    sign = size_str[-1].strip("1234567890 .")
+    return FILE_SIZE_COLORS.get(sign)[index]
 
 
 def get_path_size_str(file_path):
@@ -101,9 +97,13 @@ def remove_empty_dir(absolute_path):
 
 def my_input(s):
     try:
-        return raw_input(s)
+        f = raw_input
     except:
-        return input(s)
+        f = input
+    try:
+        return f(s)
+    except KeyboardInterrupt:
+        exit(1)
 
 
 def input_yes(s):

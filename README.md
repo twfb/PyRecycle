@@ -4,7 +4,7 @@
 [中文](./README_CN.md)
 
 ## Screenshot
-[![asciicast](https://asciinema.org/a/nX4UaebaXMGFWYvHuBui0WsLi.svg)](https://asciinema.org/a/nX4UaebaXMGFWYvHuBui0WsLi)
+[![asciicast](https://asciinema.org/a/435392.svg)](https://asciinema.org/a/435392)
 
 
 ## Usage
@@ -49,68 +49,72 @@ Example:
             "file size < 1000unit",
             "file size < 10000unit"
         ],
-        "choice of color": [
-            "white",
-            "black",
-            "red",
-            "green",
-            "orange",
-            "blue",
-            "magenta",
-            "cyan",
-            "light_gray",
-            "blod white",
-            "blod black",
-            "blod red",
-            "blod green",
-            "blod orange",
-            "blod blue",
-            "blod magenta",
-            "blod cyan",
-            "blod light_gray"
-        ],
-        "b": [
-            "white",
-            "white",
-            "white",
-            "white"
-        ],
-        "B": [
-            "white",
-            "white",
-            "white",
-            "white"
-        ],
-        "K": [
-            "white",
-            "white",
-            "white",
-            "green"
-        ],
-        "M": [
-            "green",
-            "green",
-            "blod green",
-            "blue"
-        ],
-        "G": [
-            "blue",
-            "blue",
-            "blod blue",
-            "orange"
-        ],
-        "T": [
-            "orange",
-            "orange",
-            "blood orange",
-            "red"
-        ],
-        "P": [
-            "red",
-            "red",
-            "blood red",
-            "blood red"
-        ]
+         "choice of color": [
+             "black",
+             "red",
+             "green",
+             "orange",
+             "blue",
+             "magenta",
+             "cyan",
+             "light_gray",
+             "dark_gray",
+             "light_red",
+             "light_green",
+             "yellow",
+             "light_blue",
+             "light_purple",
+             "light_cyan",
+             "white"
+         ],
+         "": [
+             "light_gray",
+             "light_gray",
+             "light_gray",
+             "light_gray"
+         ],
+         "b": [
+             "light_gray",
+             "light_gray",
+             "light_gray",
+             "light_gray"
+         ],
+         "B": [
+             "light_gray",
+             "light_gray",
+             "light_gray",
+             "light_gray"
+         ],
+         "K": [
+             "light_gray",
+             "light_gray",
+             "light_gray",
+             "cyan"
+         ],
+         "M": [
+             "cyan",
+             "cyan",
+             "light_cyan",
+             "orange"
+         ],
+         "G": [
+             "orange",
+             "orange",
+             "yellow",
+             "magenta"
+         ],
+         "T": [
+             "magenta",
+             "magenta",
+             "light_purple",
+             "red"
+         ],
+         "P": [
+             "red",
+             "red",
+             "light_red",
+             "light_red"
+         ]
     }
 }
 ```
