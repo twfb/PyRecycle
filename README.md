@@ -1,4 +1,4 @@
-# Recycle
+# py-recycle
 > recycle for linux
 
 [中文](./README_CN.md)
