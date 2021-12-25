@@ -7,7 +7,7 @@
 
 ## 用法
 - 将文件移动到回收站: `del file_path`
-- 将文件才回收站恢复: `undel file_path` or `undel trash_path`
+- 将文件从回收站恢复: `undel file_path` or `undel trash_path`
 - 永久删除垃圾文件: `pdel trash_file`
 - 打印回收站文件树: `tt`
 - 打印回收站文件树调用`less`显示: `tl`
