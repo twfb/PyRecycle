@@ -1,5 +1,5 @@
 # py-recycle
-> recycle for linux
+> Recycle Bin For Linux
 
 [中文](./README_CN.md)
 
