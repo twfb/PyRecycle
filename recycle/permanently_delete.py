@@ -24,8 +24,12 @@ def delete_by_regrex(absolute_dir, file_regex, reverse):
         absolute_trash_file_dir = os.path.join(absolute_dir, file_name_dir)
         if not directory_exists(absolute_trash_file_dir):
             return
-        execute_delete(absolute_trash_file_dir)
-        remove_empty_dir(absolute_trash_file_dir)
+        for sub_file_name_dir in search_files(absolute_trash_file_dir, TRASH_REGEX):
+            absolute_sub_file_path = os.path.join(
+                absolute_trash_file_dir, sub_file_name_dir
+            )
+            delete_by_id(absolute_sub_file_path)
+            remove_empty_dir(absolute_sub_file_path)
 
 
 def permanently_delete(trash_dir, file_regex, reverse):

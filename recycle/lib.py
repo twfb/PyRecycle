@@ -65,6 +65,8 @@ def search_files(directory, file_regex):
     files_list = os.listdir(directory)
     if file_regex in files_list:
         return [file_regex]
+    if file_regex == ".*":
+        return files_list
     file_compile = re.compile(file_regex)
     return list(filter(file_compile.match, files_list))
 
