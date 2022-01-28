@@ -52,7 +52,7 @@ def generate_trash_file_name(file_path):
 def directory_exists(directory):
     if os.path.isdir(directory):
         return True
-    my_print('Directory "{}" not exists.'.format(directory))
+    # my_print('Directory "{}" not exists.'.format(directory))
     return False
 
 
