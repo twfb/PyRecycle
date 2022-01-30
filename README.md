@@ -14,11 +14,11 @@
 - print trash tree: `tt`
 - print trash tree with `less`: `tl`
 - example
-    - `del ~/a`, `del /root/a`, `del a`, `del \^a`, `del "^a"`
-    - `undel ~/a`, `undel /root/a`, `undel a`, `undel ~/.Trash/root/a`
-    - `pdel ~/a`, `pdel /root/a`, `pdel a`, `pdel ~/.Trash/root/a`
-    - `tt`, `tt ~`
-    - `tl`, `tl ~`
+    - `del ~/a`, `del /root/a`, `del a`, `del \^a`, `del '^a'`, `del 'a/*/*'`
+    - `undel ~/a`, `undel /root/a`, `undel a`, `undel ~/.Trash/root/a`, `del 'a/*/*'`
+    - `pdel ~/a`, `pdel /root/a`, `pdel a`, `pdel ~/.Trash/root/a`, `del 'a/*/*'`
+    - `tt`, `tt ~`, `tl '*/*'` 
+    - `tl`, `tl ~`, `tl '*/*'` 
 
 ## Installation
 1. `pip install py-recycle`
@@ -26,6 +26,7 @@
     - If you did not add python script location to `PATH`, execute `/usr/local/bin/recycle_init 2&> /dev/null || ~/.local/bin/recycle_init`
 
 ## Configuration
+- `VERBOSE`: Show operations
 - `ENABLE_EMOJI`: Enable emoji
 - `ENABLE_COLOR`: Enable color
 - `TREE_ALL_DIRECTORY_SIZE`: Print all file or directory size
@@ -38,6 +39,7 @@ Example:
 
 ```Json
 {
+    "VERBOSE": true,
     "ENABLE_EMOJI": true,
     "ENABLE_COLOR": true,
     "TREE_ALL_DIRECTORY_SIZE": false,
@@ -120,4 +122,5 @@ Example:
 ```
 
 ### TODO
-[X] show different color by trash file size
+[X]show different color by trash file size
+[ ]folder path support regex, 'del /\d+/a.*?'

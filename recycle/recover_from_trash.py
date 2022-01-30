@@ -5,39 +5,39 @@ import re
 
 from recycle.config import TRASH_PATH, TRASH_REGEX
 from recycle.lib import (
+    mkdir,
     my_print,
     operations,
-    directory_exists,
     search_files,
     replace_file,
     execute_move,
+    directory_exists,
+    remove_trash_path,
     remove_empty_dir,
 )
 
 
-def recover_by_id(file_id, recover_path, absolute_dir):
+def recover_by_id(file_path, recover_path):
     if replace_file(recover_path):
-        absolute_file = os.path.join(absolute_dir, file_id)
-        execute_move(absolute_file, recover_path)
-        return remove_empty_dir(absolute_dir)
+        mkdir(os.path.dirname(recover_path))
+        execute_move(file_path, recover_path)
+        return remove_empty_dir(os.path.dirname(file_path))
 
 
 def recover_by_regrex(absolute_dir, file_regex, recover_path, reverse):
-    for file_name_dir in search_files(absolute_dir, file_regex):
-        recover_trash_file_dir = os.path.join(recover_path, file_name_dir)
-        absolute_trash_file_dir = os.path.join(absolute_dir, file_name_dir)
+    for absolute_trash_file_dir in search_files(absolute_dir, file_regex):
+        recover_trash_file_dir = remove_trash_path(absolute_trash_file_dir)
         if not directory_exists(absolute_trash_file_dir):
             return
         trash_files_list = search_files(absolute_trash_file_dir, TRASH_REGEX)
-        for file_name in sorted(trash_files_list, reverse=reverse):
-            recover_by_id(file_name, recover_trash_file_dir, absolute_trash_file_dir)
+        for file_path in sorted(trash_files_list, reverse=reverse):
+            recover_by_id(file_path, recover_trash_file_dir)
             break
         remove_empty_dir(absolute_trash_file_dir)
 
 
 def recover_from_trash(trash_dir, file_regex, reverse):
-    if trash_dir.startswith(TRASH_PATH):
-        relative_dir = trash_dir[len(TRASH_PATH) :]
+    relative_dir = remove_trash_path(trash_dir)
     is_trash_id = re.match(TRASH_REGEX, file_regex)
     relative_dir = trash_dir.strip("/")
     absolute_dir = os.path.join(TRASH_PATH, relative_dir)
@@ -46,15 +46,9 @@ def recover_from_trash(trash_dir, file_regex, reverse):
     if not directory_exists(absolute_dir):
         return
 
-    if not os.path.isdir(recover_path):
-        if is_trash_id and os.path.isdir("/".join(recover_path.split("/")[:-1])):
-            pass
-        else:
-            os.makedirs(recover_path, exist_ok=True)
-
     if is_trash_id:
         current_dir = os.getcwd()
-        recover_by_id(file_regex, recover_path, absolute_dir)
+        recover_by_id(os.path.join(absolute_dir, file_regex), recover_path)
         if trash_dir == current_dir:
             my_print("\nPlease run: \n\n\tcd ..;cd -")
         return

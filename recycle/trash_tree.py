@@ -100,8 +100,7 @@ def main():
         tree_pwd = False
         if not parent_dir.startswith(TRASH_PATH):
             parent_dir = TRASH_PATH + parent_dir
-        for file_name in search_files(parent_dir, file_regex):
-            file_path = os.path.join(parent_dir, file_name)
+        for file_path in search_files(parent_dir, file_regex):
             if os.path.exists(file_path):
                 print_directory(file_path, file_path, is_header=True)
                 if os.path.isdir(file_path):

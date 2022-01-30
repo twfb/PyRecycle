@@ -12,11 +12,11 @@
 - 打印回收站文件树: `tt`
 - 打印回收站文件树调用`less`显示: `tl`
 - 示例
-    - `del ~/a`, `del /root/a`, `del a`, `del \^a`, `del "^a"`
-    - `undel ~/a`, `undel /root/a`, `undel a`, `undel ~/.Trash/root/a`
-    - `pdel ~/a`, `pdel /root/a`, `pdel a`, `pdel ~/.Trash/root/a`
-    - `tt`, `tt ~`
-    - `tl`, `tl ~`
+    - `del ~/a`, `del /root/a`, `del a`, `del \^a`, `del '^a'`, `del 'a/*/*'`
+    - `undel ~/a`, `undel /root/a`, `undel a`, `undel ~/.Trash/root/a`, `del 'a/*/*'`
+    - `pdel ~/a`, `pdel /root/a`, `pdel a`, `pdel ~/.Trash/root/a`, `del 'a/*/*'`
+    - `tt`, `tt ~`, `tl '*/*'` 
+    - `tl`, `tl ~`, `tl '*/*'` 
 
 ## 安装
 1. `pip install py-recycle`
@@ -24,6 +24,7 @@
     - 如果你的`PATH`中没有Python脚本目录, 执行 `/usr/local/bin/recycle_init 2&> /dev/null || ~/.local/bin/recycle_init`
 
 ## 配置
+- `VREBOSE`: 是否显示具体操作
 - `ENABLE_EMOJI`: 是否启用表情
 - `ENABLE_COLOR`: 是否启用颜色
 - `TREE_ALL_DIRECTORY_SIZE`: 是否打印所有文件大小
@@ -36,6 +37,7 @@
 
 ```Json
 {
+    "VREBOSE": true,
     "ENABLE_EMOJI": true,
     "ENABLE_COLOR": true,
     "TREE_ALL_DIRECTORY_SIZE": false,
@@ -119,3 +121,4 @@
 
 ### TODO
 [X]根据垃圾文件大小显示不同颜色
+[ ]文件夹路径支持正则, 'del /\d+/a.*?'

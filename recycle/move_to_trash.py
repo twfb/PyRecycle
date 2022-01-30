@@ -5,6 +5,7 @@ import json
 
 from recycle.config import TRASH_PATH
 from recycle.lib import (
+    mkdir,
     operations,
     search_files,
     generate_trash_file_name,
@@ -17,11 +18,9 @@ def move_to_trash(trash_dir, file_regex):
     if not directory_exists(trash_dir):
         return
 
-    for file_name in search_files(trash_dir, file_regex):
-        del_file = os.path.join(trash_dir, file_name)
+    for del_file in search_files(trash_dir, file_regex):
         absolute_trash_file_dir = TRASH_PATH + del_file
-        if not os.path.exists(absolute_trash_file_dir):
-            os.makedirs(absolute_trash_file_dir)
+        mkdir(absolute_trash_file_dir)
         trash_file = os.path.join(
             absolute_trash_file_dir, generate_trash_file_name(del_file)
         )

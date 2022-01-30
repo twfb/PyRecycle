@@ -50,7 +50,8 @@ FILE_SIZE_COLORS = {
 }
 # User Config
 ENABLE_EMOJI = config.get("ENABLE_EMOJI", True)
+VERBOSE = config.get("VERBOSE", True)
 ENABLE_COLOR = config.get("ENABLE_COLOR", True)
 TREE_ALL_DIRECTORY_SIZE = config.get("TREE_ALL_DIRECTORY_SIZE", True)
-TRASH_PATH = config.get("TRASH_PATH") or INIT_TRASH_PATH
+TRASH_PATH = (config.get("TRASH_PATH") or INIT_TRASH_PATH).rstrip("/")
 FILE_SIZE_COLORS = config.get("FILE_SIZE_COLORS") or FILE_SIZE_COLORS

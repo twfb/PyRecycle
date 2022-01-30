@@ -1,18 +1,42 @@
 # coding: utf-8
 
 import os
-import sys
 import re
+import sys
 import datetime
 import subprocess
 
+from glob import glob
 from recycle.config import (
     TRASH_PATH,
     TRASH_DATETIME_FORMAT,
     FILE_SIZE_COLORS,
     ENABLE_COLOR,
     COLORS,
+    VERBOSE,
 )
+
+
+def remove_trash_path(trash_file_path):
+    if trash_file_path.startswith(TRASH_PATH):
+        return trash_file_path[len(TRASH_PATH) :]
+    return trash_file_path
+
+
+def mkdir(path):
+    if os.path.isfile(path):
+        my_print(
+            "\t{} is file. Cann't create same name directory.".format(
+                get_colorful_str(file_path, color_code="red", end="")
+            )
+        )
+        raise Exception('Already has same name file, can not create directory.')
+    elif os.path.isdir(path):
+        pass
+    else:
+        if VERBOSE:
+            my_print("mkdir -p {}".format(path))
+        os.system("mkdir -p {}".format(re.escape(path)))
 
 
 def get_current_path():
@@ -50,34 +74,54 @@ def generate_trash_file_name(file_path):
 
 
 def directory_exists(directory):
-    if os.path.isdir(directory):
+    return os.path.isdir(directory) or get_all_files(directory, only_check=True)
+
+
+def get_all_files(directory, only_check=False, absolute_files=False):
+    files = glob(directory + "/*") + glob(directory + "/.*")
+    slash_count = directory.count("/") + 1
+    if only_check and files:
         return True
-    # my_print('Directory "{}" not exists.'.format(directory))
-    return False
+    if absolute_files:
+        return files
+    return list(map(lambda x: "/".join(x.split("/")[slash_count:]), files))
 
 
-def search_files(directory, file_regex):
+def search_files(directory, file_regex, absolute_files=True):
     if file_regex == "\.":
         return [directory]
     if not (file_regex and directory_exists(directory)):
         return []
 
-    files_list = os.listdir(directory)
-    if file_regex in files_list:
-        return [file_regex]
-    if file_regex == ".*":
-        return files_list
+    files = get_all_files(directory, absolute_files=absolute_files)
+    tmp_files = list(filter(lambda x: x.endswith("/" + file_regex), files))
+    if tmp_files:
+        return tmp_files
+    if file_regex == "*":
+        return files
     file_compile = re.compile(file_regex)
-    return list(filter(file_compile.match, files_list))
+    if absolute_files:
+        match_fun = lambda x: file_compile.match(x.split("/")[-1])
+    else:
+        match_fun = file_compile.match
+    return list(filter(match_fun, files))
 
 
 def execute_delete(path):
-    my_print("rm -rf {}".format(path))
+    if VERBOSE:
+        my_print("rm -rf {}".format(path))
     os.system("rm -rf {}".format(re.escape(path)))
 
 
+def execute_dir_delete(path):
+    if VERBOSE:
+        my_print("rmdir {}".format(path))
+    os.system("rmdir {}".format(re.escape(path)))
+
+
 def execute_move(source, destination):
-    my_print("mv {} {}".format(source, destination))
+    if VERBOSE:
+        my_print("mv {} {}".format(source, destination))
     source = re.escape(source)
     destination = re.escape(destination)
     # Will change current directory to source
@@ -91,7 +135,7 @@ def remove_empty_dir(absolute_path):
             break
 
     while os.path.isdir(absolute_path) and not os.listdir(absolute_path):
-        os.rmdir(absolute_path)
+        execute_dir_delete(absolute_path)
         absolute_path = absolute_path[: absolute_path.rindex("/")]
         if absolute_path == TRASH_PATH:
             break
@@ -109,12 +153,18 @@ def my_input(s):
 
 
 def input_yes(s):
-    return my_input(s).lower() in ["yes", "y"]
+    result = my_input(s).lower() in ["yes", "y"]
+    my_print("")
+    return result
 
 
 def replace_file(file_path):
     if os.path.exists(file_path):
-        if input_yes("{} already exists replace it? [N/y]".format(file_path)):
+        if input_yes(
+            "\t{} already exists. Replace it? [N/y] ".format(
+                get_colorful_str(file_path, color_code="red", end="")
+            )
+        ):
             trash_file = os.path.join(
                 TRASH_PATH + file_path, generate_trash_file_name(file_path)
             )
@@ -165,6 +215,4 @@ def operations():
         parent_dir, file_regex, reverse = get_parent_dir_and_file_regex(arg)
         if not arg:
             continue
-        if file_regex == "*":
-            file_regex = ".*"
         yield parent_dir, file_regex, reverse

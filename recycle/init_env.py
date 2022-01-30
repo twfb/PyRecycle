@@ -4,11 +4,12 @@ import json
 import os
 import sys
 
-from recycle.lib import my_print, my_input
+from recycle.lib import my_print, my_input, mkdir
 from recycle.config import (
     CONFIG_PATH,
     HOME,
     ENABLE_EMOJI,
+    VERBOSE,
     ENABLE_COLOR,
     TREE_ALL_DIRECTORY_SIZE,
     TRASH_PATH,
@@ -121,11 +122,12 @@ def main():
     install("bash", path)
 
     if not os.path.exists(TRASH_PATH):
-        os.makedirs(TRASH_PATH)
+        mkdir(TRASH_PATH)
     open(CONFIG_PATH, "w").write(
         json.dumps(
             dict(
                 ENABLE_EMOJI=ENABLE_EMOJI,
+                VERBOSE=VERBOSE,
                 ENABLE_COLOR=ENABLE_COLOR,
                 TREE_ALL_DIRECTORY_SIZE=TREE_ALL_DIRECTORY_SIZE,
                 TRASH_PATH=TRASH_PATH,
