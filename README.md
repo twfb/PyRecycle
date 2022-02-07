@@ -122,5 +122,5 @@ Example:
 ```
 
 ### TODO
-[X]show different color by trash file size
-[ ]folder path support regex, 'del /\d+/a.*?'
+- [X] show different color by trash file size
+- [ ] folder path support regex, 'del /\d+/a.*?'
