@@ -1,4 +1,4 @@
-# Recycle
+# py-recycle
 > Linux 垃圾回收站
 
 ## 截屏
