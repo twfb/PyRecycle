@@ -14,7 +14,7 @@
 - 示例
     - `del ~/a`, `del /root/a`, `del a`, `del \^a`, `del '^a'`, `del 'a/*/*'`
     - `undel ~/a`, `undel /root/a`, `undel a`, `undel /root/.Trash/a`, `del 'a/*/*'`
-    - `pdel ~/a`, `pdel /root/a`, `pdel a`, `pdel /root/.Trash/a`, `del 'a/*/*'`
+    - `pdel ~/a`, `pdel /root/a`, `pdel a`, `pdel /root/.Trash/a`, `pdel 'a/*/*'`, `pdel '/tmp/*'`
     - `tt`, `tt ~`, `tt '*/*'`
     - `tl`, `tl ~`, `tl '*/*'`
 
