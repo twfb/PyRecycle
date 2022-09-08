@@ -28,5 +28,5 @@ def move_to_trash(trash_dir, file_regex):
 
 
 def main():
-    for parent_dir, file_regex, _ in operations():
+    for parent_dir, file_regex, _, _ in operations():
         move_to_trash(parent_dir, file_regex)

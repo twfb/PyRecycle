@@ -63,8 +63,10 @@ def print_branch(file_name, file_path, is_last_one, parent_str, stop_regex):
     else:
         header = "├── "
         parent_str += "│   "
-
-    sys.stdout.write(tmp_str + header)
+    try:
+        sys.stdout.write(tmp_str + header)
+    except:
+        pass
 
     if not os.path.isdir(file_path):
         print_file(file_name)
@@ -96,11 +98,13 @@ def print_tree(directory, stop_regex=None, parent_str="", first_print_regex=True
 
 def main():
     tree_pwd = True
-    for parent_dir, file_regex, _ in operations():
+    for parent_dir, file_regex, _, raw in operations():
         tree_pwd = False
         if not parent_dir.startswith(TRASH_PATH):
             parent_dir = TRASH_PATH + parent_dir
-        for file_path in search_files(parent_dir, file_regex):
+        for file_path in search_files(parent_dir, file_regex) or search_files(
+            raw, file_regex
+        ):
             if os.path.exists(file_path):
                 print_directory(file_path, file_path, is_header=True)
                 if os.path.isdir(file_path):

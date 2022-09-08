@@ -47,14 +47,17 @@ def permanently_delete_ask(absolute_file):
     )
 
 
-def permanently_delete(trash_dir, file_regex, reverse):
+def permanently_delete(trash_dir, file_regex, reverse, raw):
     if trash_dir.startswith(TRASH_PATH):
         relative_dir = remove_trash_path(trash_dir).strip("/")
     else:
         relative_dir = trash_dir.strip("/")
     absolute_dir = os.path.join(TRASH_PATH, relative_dir)
     if not directory_exists(absolute_dir):
-        return
+        if directory_exists(raw):
+            absolute_dir = raw
+        else:
+            return
     absolute_file = os.path.join(absolute_dir, file_regex)
     if re.match(TRASH_REGEX, file_regex) and permanently_delete_ask(absolute_file):
         return delete_by_id(absolute_file)
@@ -63,5 +66,5 @@ def permanently_delete(trash_dir, file_regex, reverse):
 
 
 def main():
-    for parent_dir, file_regex, reverse in operations():
-        permanently_delete(parent_dir, file_regex, reverse)
+    for parent_dir, file_regex, reverse, raw in operations():
+        permanently_delete(parent_dir, file_regex, reverse, raw)

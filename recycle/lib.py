@@ -30,7 +30,7 @@ def mkdir(path):
                 get_colorful_str(file_path, color_code="red", end="")
             )
         )
-        raise Exception('Already has same name file, can not create directory.')
+        raise Exception("Already has same name file, can not create directory.")
     elif os.path.isdir(path):
         pass
     else:
@@ -54,7 +54,10 @@ def get_colorful_str(s, end="\n", color_code=None):
 
 
 def my_print(s, end="\n", color_code=None):
-    sys.stdout.write(get_colorful_str(s, end, color_code))
+    try:
+        sys.stdout.write(get_colorful_str(s, end, color_code))
+    except:
+        pass
 
 
 def get_size_color_code(size_str):
@@ -78,7 +81,9 @@ def directory_exists(directory):
 
 
 def get_all_files(directory, only_check=False, absolute_files=False):
-    files = glob(directory + "/*") + glob(directory + "/.*")
+    files = [
+        i.replace("//", "/") for i in glob(directory + "/*") + glob(directory + "/.*")
+    ]
     slash_count = directory.count("/") + 1
     if only_check and files:
         return True
@@ -190,11 +195,12 @@ def get_absolute_dirs(dirs):
 def get_parent_dir_and_file_regex(input_arg):
     reverse = True
     if input_arg == "/":
-        return "/", "\.", reverse
+        return "/", "\.", reverse, ""
     parent_dir = get_current_path()
     dirs = input_arg.split("/")
-
+    raw = ""
     if dirs:
+        raw = os.path.join(TRASH_PATH, "/".join(dirs[:-1]))
         if not dirs[0]:
             # use absolute path
             dirs = get_absolute_dirs(dirs)
@@ -203,7 +209,7 @@ def get_parent_dir_and_file_regex(input_arg):
         parent_dir = "/".join(dirs[:-1]) or "/"
 
     file_regex = dirs[-1] if dirs else input_arg
-    return parent_dir, file_regex, reverse
+    return parent_dir, file_regex, reverse, raw
 
 
 def operations():
@@ -212,7 +218,7 @@ def operations():
             arg = arg.rstrip("/")
             arg = arg[2:] if arg[:2] == "./" else arg
 
-        parent_dir, file_regex, reverse = get_parent_dir_and_file_regex(arg)
+        parent_dir, file_regex, reverse, raw = get_parent_dir_and_file_regex(arg)
         if not arg:
             continue
-        yield parent_dir, file_regex, reverse
+        yield parent_dir, file_regex, reverse, raw

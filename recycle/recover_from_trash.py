@@ -36,7 +36,7 @@ def recover_by_regrex(absolute_dir, file_regex, recover_path, reverse):
         remove_empty_dir(absolute_trash_file_dir)
 
 
-def recover_from_trash(trash_dir, file_regex, reverse):
+def recover_from_trash(trash_dir, file_regex, reverse, raw):
     relative_dir = remove_trash_path(trash_dir)
     is_trash_id = re.match(TRASH_REGEX, file_regex)
     relative_dir = trash_dir.strip("/")
@@ -44,7 +44,10 @@ def recover_from_trash(trash_dir, file_regex, reverse):
     recover_path = "/" + relative_dir
 
     if not directory_exists(absolute_dir):
-        return
+        if directory_exists(raw):
+            absolute_dir = raw
+        else:
+            return
 
     if is_trash_id:
         current_dir = os.getcwd()
@@ -56,5 +59,5 @@ def recover_from_trash(trash_dir, file_regex, reverse):
 
 
 def main():
-    for parent_dir, file_regex, reverse in operations():
-        recover_from_trash(parent_dir, file_regex, reverse)
+    for parent_dir, file_regex, reverse, raw in operations():
+        recover_from_trash(parent_dir, file_regex, reverse, raw)

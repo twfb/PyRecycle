@@ -21,13 +21,15 @@ zsh_config = """# py-recycle config start
 # Else it will be DELETE!
 autoload -Uz compinit
 compinit
-compdef '_files -W {}`pwd`' undel
-compdef '_files -W {}`pwd`' pdel
-compdef '_files -W {}`pwd`' tt
+compdef '_files -W "({path}`pwd` {path})"' undel
+compdef '_files -W "({path}`pwd` {path})"' pdel
+compdef '_files -W "({path}`pwd` {path})"' tt
 alias tl='tl(){{ tt $1 | less -r }};tl'
+compdef tl='tt'
+setopt complete_aliases
 # py-recycle config end
 """.format(
-    TRASH_PATH, TRASH_PATH, TRASH_PATH
+    path=TRASH_PATH
 )
 
 bash_config = """# py-recycle config start

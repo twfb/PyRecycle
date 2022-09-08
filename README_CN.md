@@ -13,10 +13,45 @@
 - 打印回收站文件树调用`less`显示: `tl`
 - 示例
     - `del ~/a`, `del /root/a`, `del a`, `del \^a`, `del '^a'`, `del 'a/*/*'`
-    - `undel ~/a`, `undel /root/a`, `undel a`, `undel ~/.Trash/root/a`, `del 'a/*/*'`
-    - `pdel ~/a`, `pdel /root/a`, `pdel a`, `pdel ~/.Trash/root/a`, `del 'a/*/*'`
-    - `tt`, `tt ~`, `tl '*/*'` 
-    - `tl`, `tl ~`, `tl '*/*'` 
+    - `undel ~/a`, `undel /root/a`, `undel a`, `undel /root/.Trash/a`, `del 'a/*/*'`
+    - `pdel ~/a`, `pdel /root/a`, `pdel a`, `pdel /root/.Trash/a`, `del 'a/*/*'`
+    - `tt`, `tt ~`, `tt '*/*'`
+    - `tl`, `tl ~`, `tl '*/*'`
+
+## 注意
+- 使用`undel`, `pdel`, `tt`, `tl`时按下tab后命令行提示的文件列表为**当前路径被删除的文件**和**回收站根路径被删除的文件**
+    
+    ```shell
+    $ pwd
+    /test
+    $ mkdir dir /dir /dir2
+    $ del dir /dir /dir2
+    mkdir -p /root/.Trash/test/dir
+    mv /test/dir /root/.Trash/test/dir/2022-09-02_01:39:06704016_4.0K
+    mkdir -p /root/.Trash/dir
+    mv /dir /root/.Trash/dir/2022-09-02_01:39:06713729_4.0K
+    mkdir -p /root/.Trash/dir2
+    mv /dir2 /root/.Trash/dir2/2022-09-02_01:39:06719008_4.0K
+    
+    $ pdel <tab>
+    dir/  dir2/  etc/   home/  mnt/   root/  usr/
+    
+    $ pdel dir
+        Permanently delete /root/.Trash/test/dir ? [N/y] y
+    rm -rf /root/.Trash/test/dir/2022-09-02_01:22:26772094_4.0K
+    rmdir /root/.Trash/test/dir
+    rmdir /root/.Trash/test
+    
+    $ pdel dir
+        Permanently delete /root/.Trash/dir ? [N/y] y
+    rm -rf /root/.Trash/dir/2022-09-02_01:22:29299637_4.0K
+    rmdir /root/.Trash/dir
+    
+    $ pdel /dir2
+        Permanently delete /root/.Trash/dir2 ? [N/y] y
+    rm -rf /root/.Trash/dir2/2022-09-02_01:39:06719008_4.0K
+    rmdir /root/.Trash/dir2
+    ```
 
 ## 安装
 1. `pip install py-recycle`

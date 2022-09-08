@@ -15,10 +15,44 @@
 - print trash tree with `less`: `tl`
 - example
     - `del ~/a`, `del /root/a`, `del a`, `del \^a`, `del '^a'`, `del 'a/*/*'`
-    - `undel ~/a`, `undel /root/a`, `undel a`, `undel ~/.Trash/root/a`, `del 'a/*/*'`
-    - `pdel ~/a`, `pdel /root/a`, `pdel a`, `pdel ~/.Trash/root/a`, `del 'a/*/*'`
+    - `undel ~/a`, `undel /root/a`, `undel a`, `undel /root/.Trash/a`, `del 'a/*/*'`
+    - `pdel ~/a`, `pdel /root/a`, `pdel a`, `pdel /root/.Trash/a`, `del 'a/*/*'`
     - `tt`, `tt ~`, `tl '*/*'` 
     - `tl`, `tl ~`, `tl '*/*'` 
+
+## Notice
+-  Using the `undel`, `pdel`, `tt`, `tl` command prompt when pressing tab lists the files prompted for **current path deleted files** and **Recycle Bin root path deleted files** 
+    ```shell
+    $ pwd
+    /test
+    $ mkdir dir /dir /dir2
+    $ del dir /dir /dir2
+    mkdir -p /root/.Trash/test/dir
+    mv /test/dir /root/.Trash/test/dir/2022-09-02_01:39:06704016_4.0K
+    mkdir -p /root/.Trash/dir
+    mv /dir /root/.Trash/dir/2022-09-02_01:39:06713729_4.0K
+    mkdir -p /root/.Trash/dir2
+    mv /dir2 /root/.Trash/dir2/2022-09-02_01:39:06719008_4.0K
+    
+    $ pdel <tab>
+    dir/  dir2/  etc/   home/  mnt/   root/  usr/
+    
+    $ pdel dir
+        Permanently delete /root/.Trash/test/dir ? [N/y] y
+    rm -rf /root/.Trash/test/dir/2022-09-02_01:22:26772094_4.0K
+    rmdir /root/.Trash/test/dir
+    rmdir /root/.Trash/test
+    
+    $ pdel dir
+        Permanently delete /root/.Trash/dir ? [N/y] y
+    rm -rf /root/.Trash/dir/2022-09-02_01:22:29299637_4.0K
+    rmdir /root/.Trash/dir
+    
+    $ pdel /dir2
+        Permanently delete /root/.Trash/dir2 ? [N/y] y
+    rm -rf /root/.Trash/dir2/2022-09-02_01:39:06719008_4.0K
+    rmdir /root/.Trash/dir2
+    ```
 
 ## Installation
 1. `pip install py-recycle`
