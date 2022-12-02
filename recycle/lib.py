@@ -27,10 +27,10 @@ def mkdir(path):
     if os.path.isfile(path):
         my_print(
             "\t{} is file. Cann't create same name directory.".format(
-                get_colorful_str(file_path, color_code="red", end="")
+                get_colorful_str(path, color_code="red", end="")
             )
         )
-        raise Exception("Already has same name file, can not create directory.")
+        exit(1)
     elif os.path.isdir(path):
         pass
     else:
@@ -67,7 +67,9 @@ def get_size_color_code(size_str):
 
 
 def get_path_size_str(file_path):
-    return subprocess.check_output(["du", "-sh", file_path]).split()[0].decode("utf-8")
+    return str(
+        subprocess.check_output(["du", "-sh", file_path]).split()[0].decode("utf-8")
+    )
 
 
 def generate_trash_file_name(file_path):

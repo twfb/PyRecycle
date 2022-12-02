@@ -2,6 +2,7 @@
 
 import json
 import os
+import sys
 
 HOME = os.path.expanduser("~")
 INIT_TRASH_PATH = HOME + "/.Trash"
@@ -11,6 +12,23 @@ CONFIG_PATH = HOME + "/.py_recycle.json"
 if not os.path.isfile(CONFIG_PATH):
     open(CONFIG_PATH, "w").write("{}")
 config = json.loads(open(CONFIG_PATH).read())
+
+if sys.version_info[0] >= 3:
+    unicode = str
+
+for k, v in config.items():
+    if isinstance(v, unicode):
+        config[k] = str(v)
+    elif isinstance(v, list):
+        for ji, jv in enumerate(v):
+            if isinstance(jv, unicode):
+                config[k][ji] = str(jv)
+    elif isinstance(v, dict):
+        for hk, hv in v.items():
+            if isinstance(hv, unicode):
+                config[k][hk] = str(hv)
+
+
 EMOJIS = {"file": "📄", "directory": "📁"}
 COLORS = {
     "black": "0;30",
