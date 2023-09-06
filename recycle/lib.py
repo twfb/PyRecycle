@@ -16,6 +16,16 @@ from recycle.config import (
     VERBOSE,
 )
 
+_special_chars_map = {i: "\\" + chr(i) for i in b"()[]{}?*+-|^$\\.&~# \t\n\r\v\f\"'<>`"}
+
+
+def escape(pattern):
+    if isinstance(pattern, str):
+        return pattern.translate(_special_chars_map)
+    else:
+        pattern = str(pattern, "latin1")
+        return pattern.translate(_special_chars_map).encode("latin1")
+
 
 def remove_trash_path(trash_file_path):
     if trash_file_path.startswith(TRASH_PATH):
@@ -36,7 +46,7 @@ def mkdir(path):
     else:
         if VERBOSE:
             my_print("mkdir -p {}".format(path))
-        os.system("mkdir -p {}".format(re.escape(path)))
+        os.system("mkdir -p {}".format(escape(path)))
 
 
 def get_current_path():
@@ -117,20 +127,20 @@ def search_files(directory, file_regex, absolute_files=True):
 def execute_delete(path):
     if VERBOSE:
         my_print("rm -rf {}".format(path))
-    os.system("rm -rf {}".format(re.escape(path)))
+    os.system("rm -rf {}".format(escape(path)))
 
 
 def execute_dir_delete(path):
     if VERBOSE:
         my_print("rmdir {}".format(path))
-    os.system("rmdir {}".format(re.escape(path)))
+    os.system("rmdir {}".format(escape(path)))
 
 
 def execute_move(source, destination):
     if VERBOSE:
         my_print("mv {} {}".format(source, destination))
-    source = re.escape(source)
-    destination = re.escape(destination)
+    source = escape(source)
+    destination = escape(destination)
     # Will change current directory to source
     os.system("mv {} {}".format(source, destination))
 
