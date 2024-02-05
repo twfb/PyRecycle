@@ -17,10 +17,10 @@ from recycle.lib import (
 )
 
 
-def recover_by_id(file_path, recover_path):
+def recover_by_id(file_path, recover_path, copy=False):
     if replace_file(recover_path):
         mkdir(os.path.dirname(recover_path))
-        execute_move(file_path, recover_path)
+        execute_move(file_path, recover_path, copy)
         return remove_empty_dir(os.path.dirname(file_path))
 
 
@@ -38,6 +38,7 @@ def recover_by_regrex(absolute_dir, file_regex, recover_path, reverse):
 
 def recover_from_trash(trash_dir, file_regex, reverse, raw):
     relative_dir = remove_trash_path(trash_dir)
+    trash_id_in_dir = re.search(TRASH_REGEX, trash_dir)
     is_trash_id = re.match(TRASH_REGEX, file_regex)
     relative_dir = trash_dir.strip("/")
     absolute_dir = os.path.join(TRASH_PATH, relative_dir)
@@ -48,10 +49,15 @@ def recover_from_trash(trash_dir, file_regex, reverse, raw):
             absolute_dir = raw
         else:
             return
-
+    current_dir = os.getcwd()
     if is_trash_id:
-        current_dir = os.getcwd()
         recover_by_id(os.path.join(absolute_dir, file_regex), recover_path)
+        if trash_dir == current_dir:
+            my_print("\nPlease run: \n\n\tcd ..;cd -")
+        return
+    elif trash_id_in_dir:
+        recover_path = os.path.join(re.sub(TRASH_REGEX, "", recover_path), file_regex)
+        recover_by_id(os.path.join(absolute_dir, file_regex), recover_path, copy=True)
         if trash_dir == current_dir:
             my_print("\nPlease run: \n\n\tcd ..;cd -")
         return

@@ -136,13 +136,14 @@ def execute_dir_delete(path):
     os.system("rmdir {}".format(escape(path)))
 
 
-def execute_move(source, destination):
+def execute_move(source, destination, copy=False):
+    command = "cp -r" if copy else "mv"
     if VERBOSE:
-        my_print("mv {} {}".format(source, destination))
+        my_print("{} {} {}".format(command, source, destination))
     source = escape(source)
     destination = escape(destination)
     # Will change current directory to source
-    os.system("mv {} {}".format(source, destination))
+    os.system("{} {} {}".format(command, source, destination))
 
 
 def remove_empty_dir(absolute_path):
@@ -182,8 +183,10 @@ def replace_file(file_path):
                 get_colorful_str(file_path, color_code="red", end="")
             )
         ):
+            absolute_trash_file_dir = TRASH_PATH + file_path
+            mkdir(absolute_trash_file_dir)
             trash_file = os.path.join(
-                TRASH_PATH + file_path, generate_trash_file_name(file_path)
+                absolute_trash_file_dir, generate_trash_file_name(file_path)
             )
             execute_move(file_path, trash_file)
             return True
