@@ -21,9 +21,9 @@ zsh_config = """# py-recycle config start
 # Else it will be DELETE!
 autoload -Uz compinit
 compinit
-compdef '_files -W "({path}`pwd` {path})"' undel
-compdef '_files -W "({path}`pwd` {path})"' pdel
-compdef '_files -W "({path}`pwd` {path})"' tt
+compdef '_files -g ".*(#q-^.)" -W "({path}`pwd` {path})"' undel
+compdef '_files -g ".*(#q-^.)" -W "({path}`pwd` {path})"' pdel
+compdef '_files -g ".*(#q-^.)" -W "({path}`pwd` {path})"' tt
 alias tl='tl(){{ tt $1 | less -r }};tl'
 compdef tl='tt'
 setopt complete_aliases
