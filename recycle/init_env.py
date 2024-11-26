@@ -21,7 +21,7 @@ zsh_config = """# py-recycle config start
 # Else it will be DELETE!
 autoload -Uz compinit
 compinit
-compdef '_files -g ".*" -W "`pwd`"' del
+compdef '_files -W "`pwd`"' del
 compdef '_files -g ".*" -W "({path}`pwd` {path})"' undel
 compdef '_files -g ".*" -W "({path}`pwd` {path})"' pdel
 compdef '_files -g ".*" -W "({path}`pwd` {path})"' tt
