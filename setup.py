@@ -2,14 +2,14 @@ from setuptools import setup, find_packages
 
 setup(
     name="py-recycle",
-    version="1.3.4",
+    version="1.3.6",
     description=("Recycle for linux"),
     long_description=open("README.rst").read(),
     author="twfb",
     author_email="twfb@hotmail.com",
     maintainer="twfb",
     maintainer_email="twfb@hotmail.com",
-    license="BSD License",
+    license="GPLv3",
     packages=find_packages(),
     platforms=["all"],
     include_package_data=True,

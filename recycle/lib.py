@@ -51,7 +51,9 @@ def mkdir(path):
 
 def get_current_path():
     try:
-        return os.path.abspath(os.getcwd())
+        # return os.path.abspath(os.getcwd())
+        # Support Symbolic Link
+        return os.path.abspath(os.environ["PWD"])
     except Exception:
         return None
 
